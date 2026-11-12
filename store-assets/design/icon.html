@@ -1,0 +1,91 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<style>
+  html, body { margin: 0; background: transparent; }
+  svg { display: block; }
+</style>
+</head>
+<body>
+<!--
+  墨匣图标：墨黑圆角底 + 素白信笺 + 黑白印章，印章里是一枚向下的导出箭头。
+  ?size=128&pad=16  商店 / manifest 128 图标：按 Chrome 规范留 16px 透明边，主体 96x96
+  ?size=48&pad=2    小尺寸图标：基本铺满；<=32 时省略纸面细节，保证能看清
+-->
+<script>
+  const params = new URLSearchParams(location.search);
+  const size = Number(params.get("size") || 128);
+  const pad = Number(params.get("pad") || 16);
+  const simple = params.has("simple") ? params.get("simple") === "1" : size <= 32;
+  const tiny = params.get("tiny") === "1";
+  const s = (size - pad * 2) / 96;
+
+  const defs = `
+    <linearGradient id="ink" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#2b2b2b"/>
+      <stop offset=".55" stop-color="#161616"/>
+      <stop offset="1" stop-color="#080808"/>
+    </linearGradient>
+    <linearGradient id="paper" x1="0" y1="0" x2=".4" y2="1">
+      <stop offset="0" stop-color="#ffffff"/>
+      <stop offset=".6" stop-color="#f1f1f1"/>
+      <stop offset="1" stop-color="#dedede"/>
+    </linearGradient>
+    <linearGradient id="seal" x1="0" y1="0" x2=".3" y2="1">
+      <stop offset="0" stop-color="#ffffff"/>
+      <stop offset="1" stop-color="#e6e6e6"/>
+    </linearGradient>
+    <filter id="lift" x="-30%" y="-30%" width="160%" height="160%">
+      <feDropShadow dx="0" dy="2" stdDeviation="2.2" flood-color="#000" flood-opacity=".3"/>
+    </filter>
+  `;
+
+  const full = `
+    <rect x=".75" y=".75" width="94.5" height="94.5" rx="22" fill="url(#ink)"/>
+    <rect x="1.5" y="1.5" width="93" height="93" rx="21.2" fill="none" stroke="#7a7a7a" stroke-opacity=".55" stroke-width="1.2"/>
+    <path d="M22 6.5h52a14 14 0 0 1 14 14v6c-22-6-46-8-74-4v-2a14 14 0 0 1 8-14z" fill="#fff" opacity=".05"/>
+
+    <g filter="url(#lift)">
+      <path d="M28 19h33l7 7v45a5 5 0 0 1-5 5H28a5 5 0 0 1-5-5V24a5 5 0 0 1 5-5z" fill="url(#paper)"/>
+      <path d="M61 19l7 7h-7z" fill="#c7c7c7"/>
+      <path d="M35 36h18M35 43h24M35 50h21" fill="none" stroke="#8f8f8f" stroke-width="2.4" stroke-linecap="round" opacity=".9"/>
+    </g>
+
+    <g filter="url(#lift)">
+      <circle cx="65" cy="67" r="17" fill="url(#seal)"/>
+      <circle cx="65" cy="67" r="17" fill="none" stroke="#111111" stroke-width="2.6"/>
+      <path d="M65 56.5v13.5M58.5 64l6.5 6.5 6.5-6.5" fill="none" stroke="#111111" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+    </g>
+  `;
+
+  const simpleMarkup = `
+    <rect x=".75" y=".75" width="94.5" height="94.5" rx="22" fill="url(#ink)"/>
+    <rect x="1.5" y="1.5" width="93" height="93" rx="21.2" fill="none" stroke="#7a7a7a" stroke-opacity=".6" stroke-width="1.4"/>
+    <g filter="url(#lift)">
+      <path d="M27 17h34l8 8v46a5 5 0 0 1-5 5H27a5 5 0 0 1-5-5V22a5 5 0 0 1 5-5z" fill="url(#paper)"/>
+      <path d="M61 17l8 8h-8z" fill="#c7c7c7"/>
+    </g>
+    <g filter="url(#lift)">
+      <circle cx="66" cy="68" r="20" fill="url(#seal)"/>
+      <circle cx="66" cy="68" r="20" fill="none" stroke="#111111" stroke-width="3.4"/>
+      <path d="M66 55.5v15M58.5 63.5l7.5 7.5 7.5-7.5" fill="none" stroke="#111111" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+    </g>
+  `;
+
+  const tinyMarkup = `
+    <rect x=".75" y=".75" width="94.5" height="94.5" rx="22" fill="url(#ink)"/>
+    <path d="M48 19v35M29 39l19 19 19-19" fill="none" stroke="#f5f5f5" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M28 77h40" fill="none" stroke="#f5f5f5" stroke-width="9" stroke-linecap="round"/>
+  `;
+
+  document.body.innerHTML = `
+  <svg xmlns="http://www.w3.org/2000/svg" width="${size}" height="${size}" viewBox="0 0 ${size} ${size}">
+    <defs>${defs}</defs>
+    <g transform="translate(${pad} ${pad}) scale(${s})">
+      ${tiny ? tinyMarkup : simple ? simpleMarkup : full}
+    </g>
+  </svg>`;
+</script>
+</body>
+</html>
