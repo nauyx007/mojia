@@ -4,6 +4,20 @@
 
 墨匣是一个 Chrome 扩展，用来把豆包、DeepSeek 网页版里的当前对话导出为 Markdown 或 JSON。所有文件都在本地生成，不上传对话内容。
 
+![墨匣 · 把对话，收进匣子](store-assets/marquee-promo-tile-1400x560.png)
+
+## 预览
+
+| 弹窗导出 | Markdown 结果 |
+| --- | --- |
+| ![弹窗导出](store-assets/screenshot-1-1280x800.png) | ![Markdown 结果](store-assets/screenshot-2-1280x800.png) |
+| **DeepSeek + JSON 结果** | **支持的网站与隐私** |
+| ![DeepSeek + JSON 结果](store-assets/screenshot-3-1280x800.png) | ![支持的网站与隐私](store-assets/screenshot-4-1280x800.png) |
+
+商店用小尺寸宣传图：
+
+![墨匣 · 小尺寸宣传图](store-assets/small-promo-tile-440x280.png)
+
 ## 功能
 
 - 支持豆包（`doubao.com`）和 DeepSeek（`chat.deepseek.com`）的对话详情页
